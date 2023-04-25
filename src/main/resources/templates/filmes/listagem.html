@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Lista de filmes</title>
@@ -16,7 +16,12 @@
         </tr>
     </thead>
     <tbody>
-    
+        <tr th:each="filme : ${filmes}">
+            <td th:text="${filme.nome}"></td>
+            <td th:text="${filme.duracaoEmMinutos}"></td>
+            <td th:text="${filme.anoLancamento}"></td>
+            <td th:text="${filme.genero}"></td>
+        </tr>
     </tbody>
 </table>
 </body>
