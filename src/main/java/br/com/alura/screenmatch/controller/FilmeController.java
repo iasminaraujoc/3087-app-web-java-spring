@@ -22,7 +22,11 @@ public class FilmeController {
     private FilmeRepository repository;
 
     @GetMapping("/formulario")
-    public String carregaPaginaFormulario() {
+    public String carregaPaginaFormulario(Long id, Model model) {
+        if (id != null) {
+            var filme = repository.getReferenceById(id);
+            model.addAttribute("filme", filme);
+        }
         return "filmes/formulario";
     }
 
