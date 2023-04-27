@@ -21,6 +21,8 @@ public class Filme {
         this.genero = dados.genero();
     }
 
+    public Filme(){}
+
     @Override
     public String toString() {
         return "Filme{" +
