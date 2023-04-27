@@ -33,6 +33,8 @@
                 <td>
                     <form action="/filmes" method="post">
                         <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="id" th:value="${filme.id}">
+
                         <input type="submit" value="Excluir">
                     </form>
                 </td>
