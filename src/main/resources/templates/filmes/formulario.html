@@ -33,7 +33,10 @@
 
             <div>
                 <label for="genero">Gênero:</label>
-                <input id="genero" name="genero" th:value="${filme?.genero}">
+                <select id="genero">
+                    <option value=""> Selecione o gênero</option>
+                    <option th:each="genero:${generos}" th:value="${genero.id}" th:text="${genero.nome}"></option>
+                </select>
             </div>
 
             <input type="submit" value="Cadastrar">

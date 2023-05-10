@@ -4,6 +4,7 @@ import br.com.alura.screenmatch.domain.filme.DadosAlteracaoFilme;
 import br.com.alura.screenmatch.domain.filme.DadosCadastroFilme;
 import br.com.alura.screenmatch.domain.filme.Filme;
 import br.com.alura.screenmatch.domain.filme.FilmeRepository;
+import br.com.alura.screenmatch.domain.genero.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +21,12 @@ public class FilmeController {
     @Autowired
     private FilmeRepository repository;
 
+    @Autowired
+    private GeneroRepository generoRepository;
+
     @GetMapping("/formulario")
     public String carregaPaginaFormulario(Long id, Model model) {
+        model.addAttribute("generos", generoRepository.findAll());
         if (id != null) {
             var filme = repository.getReferenceById(id);
             model.addAttribute("filme", filme);
