@@ -17,11 +17,11 @@ public class Filme {
     @JoinColumn(name="genero_id")
     private Genero genero;
 
-    public Filme(DadosCadastroFilme dados) {
+    public Filme(DadosCadastroFilme dados, Genero genero) {
         this.nome = dados.nome();
         this.duracaoEmMinutos = dados.duracao();
         this.anoLancamento = dados.ano();
-        //this.genero = dados.genero();
+        this.genero = genero;
     }
 
     public Filme(){}
@@ -56,10 +56,10 @@ public class Filme {
         return genero;
     }
 
-    public void atualizaDados(DadosAlteracaoFilme dados) {
+    public void atualizaDados(DadosAlteracaoFilme dados, Genero genero) {
         this.nome = dados.nome();
         this.duracaoEmMinutos = dados.duracao();
         this.anoLancamento = dados.ano();
-        //this.genero = dados.genero();
+        this.genero = genero;
     }
 }

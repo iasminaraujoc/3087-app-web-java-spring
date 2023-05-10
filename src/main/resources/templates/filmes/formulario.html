@@ -33,7 +33,7 @@
 
             <div>
                 <label for="genero">Gênero:</label>
-                <select id="genero">
+                <select id="genero" name="idGenero" class="form-control">
                     <option value=""> Selecione o gênero</option>
                     <option th:each="genero:${generos}" th:value="${genero.id}" th:text="${genero.nome}"></option>
                 </select>

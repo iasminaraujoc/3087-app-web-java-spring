@@ -43,7 +43,8 @@ public class FilmeController {
     @PostMapping
     @Transactional
     public String cadastraFilme(DadosCadastroFilme dados) {
-        var filme = new Filme(dados);
+        var genero = generoRepository.getReferenceById(dados.idGenero());
+        var filme = new Filme(dados, genero);
 
         repository.save(filme);
 
@@ -53,8 +54,9 @@ public class FilmeController {
     @PutMapping
     @Transactional
     public String alteraFilme(DadosAlteracaoFilme dados) {
+        var genero = generoRepository.getReferenceById(dados.idGenero());
         var filme = repository.getReferenceById(dados.id());
-        filme.atualizaDados(dados);
+        filme.atualizaDados(dados, genero);
 
         return "redirect:/filmes";
     }
