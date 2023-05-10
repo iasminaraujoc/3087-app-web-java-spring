@@ -1,5 +1,6 @@
 package br.com.alura.screenmatch.domain.filme;
 
+import br.com.alura.screenmatch.domain.genero.Genero;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,13 +13,15 @@ public class Filme {
     private String nome;
     private Integer duracaoEmMinutos;
     private Integer anoLancamento;
-    private String genero;
+    @ManyToOne
+    @JoinColumn(name="genero_id")
+    private Genero genero;
 
     public Filme(DadosCadastroFilme dados) {
         this.nome = dados.nome();
         this.duracaoEmMinutos = dados.duracao();
         this.anoLancamento = dados.ano();
-        this.genero = dados.genero();
+        //this.genero = dados.genero();
     }
 
     public Filme(){}
@@ -29,7 +32,7 @@ public class Filme {
                 "nome='" + nome + '\'' +
                 ", duracaoEmMinutos=" + duracaoEmMinutos +
                 ", anoLancamento=" + anoLancamento +
-                ", genero='" + genero + '\'' +
+                ", genero='" + genero.getNome() + '\'' +
                 '}';
     }
 
@@ -49,7 +52,7 @@ public class Filme {
         return anoLancamento;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
@@ -57,6 +60,6 @@ public class Filme {
         this.nome = dados.nome();
         this.duracaoEmMinutos = dados.duracao();
         this.anoLancamento = dados.ano();
-        this.genero = dados.genero();
+        //this.genero = dados.genero();
     }
 }
