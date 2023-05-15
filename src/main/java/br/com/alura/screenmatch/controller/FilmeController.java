@@ -40,6 +40,12 @@ public class FilmeController {
         return "filmes/listagem";
     }
 
+    @GetMapping("/relatorio")
+    public String carregaPaginaRelatorio(Model model) {
+        model.addAttribute("lista", repository.findAll());
+        return "filmes/relatorio";
+    }
+
     @PostMapping
     @Transactional
     public String cadastraFilme(DadosCadastroFilme dados) {
