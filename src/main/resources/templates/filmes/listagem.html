@@ -29,7 +29,7 @@
                 <td th:text="${filme.nome}"></td>
                 <td th:text="${filme.duracaoEmMinutos}"></td>
                 <td th:text="${filme.anoLancamento}"></td>
-                <td th:text="${filme.genero}"></td>
+                <td th:text="${filme.genero?.getNome()}"></td>
                 <td>
                     <a th:href="@{/filmes/formulario?id={id}(id=${filme.id})}">Editar</a>
 
