@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}"
+>
+<head>
+    <title>Relatório de gêneros</title>
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+    <h1>Relatório de gêneros</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>NOME</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="genero : ${lista}">
+            <td>
+                <a th:href="@{/generos/relatorio?nome={nome}(nome=${genero.nome})}" th:text="${genero.nome}"></a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

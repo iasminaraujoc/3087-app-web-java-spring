@@ -1,5 +1,7 @@
 package br.com.alura.screenmatch.controller;
 
+import br.com.alura.screenmatch.domain.filme.Filme;
+import br.com.alura.screenmatch.domain.filme.FilmeRepository;
 import br.com.alura.screenmatch.domain.genero.DadosAlteracaoGenero;
 import br.com.alura.screenmatch.domain.genero.DadosCadastroGenero;
 import br.com.alura.screenmatch.domain.genero.Genero;
@@ -10,12 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/generos")
 public class GeneroController {
 
     @Autowired
     private GeneroRepository repository;
+
+    @Autowired
+    private FilmeRepository filmeRepository;
 
     @GetMapping("/formulario")
     public String carregaPaginaFormulario(Long id, Model model) {
@@ -30,6 +37,20 @@ public class GeneroController {
     public String carregaPaginaListagem(Model model) {
         model.addAttribute("lista", repository.findAll());
         return "generos/listagem";
+    }
+
+    @GetMapping("/relatorio")
+    public String carregaPaginaRelatorio(Model model, String nome) {
+
+        if (nome == null){
+            model.addAttribute("lista", repository.findAll());
+            return "generos/relatorio";
+        } else {
+            List<Filme> filmes = filmeRepository.findByGeneroNome(nome);
+            model.addAttribute("filmesGenero", filmes);
+            model.addAttribute("genero", nome);
+            return "generos/relatorio_filmes";
+        }
     }
 
     @PostMapping
