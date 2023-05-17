@@ -1,17 +1,15 @@
 package br.com.alura.screenmatch.controller;
 
-import br.com.alura.screenmatch.domain.filme.DadosAlteracaoFilme;
-import br.com.alura.screenmatch.domain.filme.DadosCadastroFilme;
-import br.com.alura.screenmatch.domain.filme.Filme;
-import br.com.alura.screenmatch.domain.filme.FilmeRepository;
+import br.com.alura.screenmatch.domain.filme.*;
 import br.com.alura.screenmatch.domain.genero.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -42,7 +40,8 @@ public class FilmeController {
 
     @GetMapping("/relatorio")
     public String carregaPaginaRelatorio(Model model) {
-        model.addAttribute("lista", repository.findAll());
+        List<Consulta> lista = repository.encontraQtdeFilmesPorGenero();
+        model.addAttribute("lista", lista);
         return "filmes/relatorio";
     }
 

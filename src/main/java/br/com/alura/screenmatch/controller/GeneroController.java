@@ -39,20 +39,6 @@ public class GeneroController {
         return "generos/listagem";
     }
 
-    @GetMapping("/relatorio")
-    public String carregaPaginaRelatorio(Model model, String nome) {
-
-        if (nome == null){
-            model.addAttribute("lista", repository.findAll());
-            return "generos/relatorio";
-        } else {
-            List<Filme> filmes = filmeRepository.findByGeneroNome(nome);
-            model.addAttribute("filmesGenero", filmes);
-            model.addAttribute("genero", nome);
-            return "generos/relatorio_filmes";
-        }
-    }
-
     @PostMapping
     @Transactional
     public String cadastraGenero(DadosCadastroGenero dados) {

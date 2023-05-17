@@ -5,31 +5,28 @@
       layout:decorate="~{template.html}"
 >
 <head>
-    <title>Lista de filmes</title>
+    <title>Lista de filmes por gênero</title>
 </head>
 <body>
 
 <div layout:fragment="conteudo">
-    <h1>Relatório de filmes</h1>
+    <h1 th:text="${genero}"></h1>
 
     <table>
         <thead>
         <tr>
-            <th>NOME</th>
-            <th>DURAÇÃO</th>
-            <th>ANO LANÇAMENTO</th>
-            <th>GÊNERO</th>
+            <th>GENEROS</th>
+            <th>QUANTIDADE DE FILMES</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="filme : ${lista}">
-            <td th:text="${filme.nome}"></td>
-            <td th:text="${filme.duracaoEmMinutos}"></td>
-            <td th:text="${filme.anoLancamento}"></td>
-            <td th:text="${filme.genero?.getNome()}"></td>
+        <tr th:each="consulta : ${lista}">
+            <td th:text="${consulta.nomeGenero}"></td>
+            <td th:text="${consulta.quantidadeFilmes}"></td>
         </tr>
         </tbody>
     </table>
+    <a href="/filmes/formulario">Gerar PDF</a>
 </div>
 </body>
 </html>
