@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -45,13 +46,13 @@ public class FilmeController {
             if(tipoOrdenacao != null){
                 switch(tipoOrdenacao){
                     case "nome":
-                        filmesPorGenero = filmesPorGenero.stream().sorted((t1, t2) -> t1.getNome().compareTo(t2.getNome())).toList();//passar o nome
+                        filmesPorGenero = filmesPorGenero.stream().sorted(Comparator.comparing(Filme::getNome)).toList();
                         break;
                     case "ano":
-                        filmesPorGenero = filmesPorGenero.stream().sorted((t1, t2) -> t1.getAnoLancamento().compareTo(t2.getAnoLancamento())).toList();
+                        filmesPorGenero = filmesPorGenero.stream().sorted(Comparator.comparing(Filme::getAnoLancamento)).toList();
                         break;
                     case "duracao":
-                        filmesPorGenero = filmesPorGenero.stream().sorted((t1, t2) -> t1.getDuracaoEmMinutos().compareTo(t2.getDuracaoEmMinutos())).toList();
+                        filmesPorGenero = filmesPorGenero.stream().sorted(Comparator.comparing(Filme::getDuracaoEmMinutos)).toList();
                         break;
                     case "original":
                         break;
