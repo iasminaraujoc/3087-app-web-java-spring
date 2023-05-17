@@ -34,8 +34,22 @@ public class FilmeController {
         return "filmes/formulario";
     }
 
+    @GetMapping("/filtro")
+    public String carregaPaginaListagem(Model model, Long idGenero) {
+        model.addAttribute("generos", generoRepository.findAll());
+
+        if(idGenero != null){
+            var genero = generoRepository.getReferenceById(idGenero);
+            List<Filme> filmesPorGenero =  repository.findByGenero(genero);
+            model.addAttribute("listaPorGenero", filmesPorGenero);
+        }
+
+        return "filmes/filtro";
+    }
+
     @GetMapping
     public String carregaPaginaListagem(Model model) {
+        model.addAttribute("generos", generoRepository.findAll());
         model.addAttribute("lista", repository.findAll());
         return "filmes/listagem";
     }

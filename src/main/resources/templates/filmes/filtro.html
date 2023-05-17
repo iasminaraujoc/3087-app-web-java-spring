@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}"
+>
+<head>
+    <title>Lista de filmes</title>
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+    <h1>Lista de filmes</h1>
+
+    <form method="get" action="/filmes/filtro">
+
+
+    <div>
+        <label for="genero">Filtro por gênero</label>
+        <select id="genero" name="idGenero" class="form-control">
+            <option value=""> Selecione o gênero</option>
+            <option th:each="genero:${generos}" th:value="${genero.id}" th:text="${genero.nome}"></option>
+        </select>
+
+        <input type="submit" value="Filtrar">
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>NOME</th>
+            <th>DURAÇÃO</th>
+            <th>ANO LANÇAMENTO</th>
+            <th>AÇÕES</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="filme : ${listaPorGenero}">
+            <td th:text="${filme.nome}"></td>
+            <td th:text="${filme.duracaoEmMinutos}"></td>
+            <td th:text="${filme.anoLancamento}"></td>
+            <td>
+                <a th:href="@{/filmes/formulario?id={id}(id=${filme.id})}">Editar</a>
+
+                <form action="/filmes" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="id" th:value="${filme.id}">
+
+                    <input type="submit" value="Excluir">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </form>
+</div>
+
+
+</body>
+</html>
