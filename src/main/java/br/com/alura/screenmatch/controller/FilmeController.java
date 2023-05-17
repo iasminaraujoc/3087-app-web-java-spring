@@ -35,12 +35,28 @@ public class FilmeController {
     }
 
     @GetMapping("/filtro")
-    public String carregaPaginaListagem(Model model, Long idGenero) {
+    public String carregaPaginaListagem(Model model, Long idGenero, String tipoOrdenacao) {
         model.addAttribute("generos", generoRepository.findAll());
 
         if(idGenero != null){
             var genero = generoRepository.getReferenceById(idGenero);
             List<Filme> filmesPorGenero =  repository.findByGenero(genero);
+
+            if(tipoOrdenacao != null){
+                switch(tipoOrdenacao){
+                    case "nome":
+                        filmesPorGenero = filmesPorGenero.stream().sorted((t1, t2) -> t1.getNome().compareTo(t2.getNome())).toList();//passar o nome
+                        break;
+                    case "ano":
+                        filmesPorGenero = filmesPorGenero.stream().sorted((t1, t2) -> t1.getAnoLancamento().compareTo(t2.getAnoLancamento())).toList();
+                        break;
+                    case "duracao":
+                        filmesPorGenero = filmesPorGenero.stream().sorted((t1, t2) -> t1.getDuracaoEmMinutos().compareTo(t2.getDuracaoEmMinutos())).toList();
+                        break;
+                    case "original":
+                        break;
+                }
+            }
             model.addAttribute("listaPorGenero", filmesPorGenero);
         }
 

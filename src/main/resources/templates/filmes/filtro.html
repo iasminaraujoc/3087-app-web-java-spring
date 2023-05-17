@@ -22,6 +22,15 @@
             <option th:each="genero:${generos}" th:value="${genero.id}" th:text="${genero.nome}"></option>
         </select>
 
+        <label for="ordenacao">Tipo de ordenação</label>
+        <select id="ordenacao" name="tipoOrdenacao" class="form-control">
+            <option value=""> Selecione a ordenação desejada</option>
+            <option value="nome"> Nome </option>
+            <option value="duracao"> Duração </option>
+            <option value="ano"> Ano Lançamento </option>
+            <option value="original"> Ordem de adição</option>
+        </select>
+
         <input type="submit" value="Filtrar">
     </div>
 
