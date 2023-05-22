@@ -1,9 +1,6 @@
 package br.com.alura.screenmatch.controller;
 
-import br.com.alura.screenmatch.domain.filme.DadosAlteracaoFilme;
-import br.com.alura.screenmatch.domain.filme.DadosCadastroFilme;
-import br.com.alura.screenmatch.domain.filme.Filme;
-import br.com.alura.screenmatch.domain.filme.FilmeRepository;
+import br.com.alura.screenmatch.domain.filme.*;
 import br.com.alura.screenmatch.domain.genero.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,11 +61,29 @@ public class FilmeController {
         return "filmes/filtro";
     }
 
+    @GetMapping("/pesquisa")
+    public String carregaPaginaPesquisaOMDB(Model model){
+        model.addAttribute("generos", generoRepository.findAll());
+        return "filmes/pesquisa";
+    }
+
     @GetMapping
     public String carregaPaginaListagem(Model model) {
         model.addAttribute("generos", generoRepository.findAll());
         model.addAttribute("lista", repository.findAll());
         return "filmes/listagem";
+    }
+
+    @PostMapping("/pesquisa")
+    @Transactional
+    public String pesquisaFilme(DadosPesquisaFilme dadosPesquisa) { //trata os dados da pesquisa
+        var genero = generoRepository.getReferenceById(dadosPesquisa.idGenero());
+        DadosCadastroFilme dadosCadastro = dadosPesquisa.converteParaCadastro();
+        var filme = new Filme(dadosCadastro, genero);
+
+        repository.save(filme);
+
+        return "redirect:/filmes";
     }
 
     @PostMapping
