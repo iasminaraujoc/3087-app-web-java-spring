@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -58,6 +57,12 @@ public class FilmeController {
 
         }
         return "filmes/filtro";
+    }
+
+    @GetMapping("/pesquisa")
+    public String carregaPaginaPesquisa(Model model) {
+        model.addAttribute("generos", generoRepository.findAll());
+        return "filmes/pesquisa";
     }
 
     @PostMapping
