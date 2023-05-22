@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}"
+>
+<head>
+    <title>Lista de filmes</title>
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+    <h1>Lista de filmes</h1>
+
+    <form method="get" action="/filmes/filtro">
+
+    <div>
+        <label for="genero">Gênero:</label>
+        <select id="genero" name="idGenero" class="form-control">
+            <option value=""> Selecione o gênero</option>
+            <option th:each="genero:${generos}" th:value="${genero.id}" th:text="${genero.nome}"></option>
+        </select>
+
+        <label for="ordenacao">Ordenação:</label>
+        <select id="ordenacao" name="tipoOrdenacao" class="form-control">
+            <option value=""> Selecione o tipo de ordenação</option>
+            <option value="nome"> Nome</option>
+            <option value="ano"> Ano</option>
+        </select>
+
+        <input type="submit" value="Filtrar">
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>NOME</th>
+            <th>DURAÇÃO</th>
+            <th>ANO LANÇAMENTO</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="filme : ${listaFiltrada}">
+            <td th:text="${filme.nome}"></td>
+            <td th:text="${filme.duracaoEmMinutos}"></td>
+            <td th:text="${filme.anoLancamento}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
