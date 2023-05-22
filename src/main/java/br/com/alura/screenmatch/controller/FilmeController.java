@@ -1,6 +1,7 @@
 package br.com.alura.screenmatch.controller;
 
 import br.com.alura.screenmatch.domain.filme.*;
+import br.com.alura.screenmatch.domain.genero.Genero;
 import br.com.alura.screenmatch.domain.genero.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,22 +75,17 @@ public class FilmeController {
         return "filmes/listagem";
     }
 
-    @PostMapping("/pesquisa")
-    @Transactional
-    public String pesquisaFilme(DadosPesquisaFilme dadosPesquisa) { //trata os dados da pesquisa
-        var genero = generoRepository.getReferenceById(dadosPesquisa.idGenero());
-        DadosCadastroFilme dadosCadastro = dadosPesquisa.converteParaCadastro();
-        var filme = new Filme(dadosCadastro, genero);
-
-        repository.save(filme);
-
-        return "redirect:/filmes";
-    }
-
     @PostMapping
     @Transactional
-    public String cadastraFilme(DadosCadastroFilme dados) {
-        var genero = generoRepository.getReferenceById(dados.idGenero());
+    public String cadastraFilme(DadosCadastroFilme dados, DadosPesquisaFilme dadosPesquisa) {
+        Genero genero;
+        if(dadosPesquisa != null){
+            genero = generoRepository.getReferenceById(dadosPesquisa.idGenero());
+            dados = dadosPesquisa.converteParaCadastro();
+        } else {
+            genero = generoRepository.getReferenceById(dados.idGenero());
+        }
+
         var filme = new Filme(dados, genero);
 
         repository.save(filme);
