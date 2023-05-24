@@ -40,6 +40,24 @@ public class FilmeController {
         return "filmes/listagem";
     }
 
+    @GetMapping("/filtro")
+    public String carregaPaginaFiltro(Model model, Long idGenero, boolean filtrarPorAno) {
+        model.addAttribute("generos", generoRepository.findAll());
+
+        if(idGenero != null){
+            var genero = generoRepository.getReferenceById(idGenero);
+            List<Filme> listaFiltrada;
+            if(filtrarPorAno){
+                listaFiltrada = repository.findByGeneroOrderByAnoLancamento(genero);
+            } else{
+                listaFiltrada = repository.findByGeneroOrderByNome(genero);
+            }
+
+            model.addAttribute("lista", listaFiltrada);
+        }
+        return "filmes/filtro";
+    }
+
     @PostMapping
     @Transactional
     public String cadastraFilme(DadosCadastroFilme dados) {
