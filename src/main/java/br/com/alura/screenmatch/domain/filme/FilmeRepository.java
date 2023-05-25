@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface FilmeRepository extends JpaRepository<Filme, Long> {
     List<Filme> findByGenero(Genero genero);
+
+    List<Filme> findByGeneroOrderByAnoLancamento(Genero genero);
+
+    List<Filme> findByGeneroOrderByNome(Genero genero);
 }
