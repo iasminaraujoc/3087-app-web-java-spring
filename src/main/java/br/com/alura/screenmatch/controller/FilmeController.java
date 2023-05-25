@@ -3,6 +3,7 @@ package br.com.alura.screenmatch.controller;
 import br.com.alura.screenmatch.domain.filme.*;
 import br.com.alura.screenmatch.domain.genero.Genero;
 import br.com.alura.screenmatch.domain.genero.GeneroRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,7 +68,7 @@ public class FilmeController {
 
     @PostMapping
     @Transactional
-    public String cadastraFilme(DadosCadastroFilme dados, DadosPesquisaFilme dadosPesquisa) {
+    public String cadastraFilme(@Valid DadosCadastroFilme dados, DadosPesquisaFilme dadosPesquisa) {
         Genero genero;
         if(dadosPesquisa != null){
             genero = generoRepository.getReferenceById(dadosPesquisa.idGenero());
@@ -85,7 +86,7 @@ public class FilmeController {
 
     @PutMapping
     @Transactional
-    public String alteraFilme(DadosAlteracaoFilme dados) {
+    public String alteraFilme(@Valid DadosAlteracaoFilme dados) {
         var genero = generoRepository.getReferenceById(dados.idGenero());
         var filme = repository.getReferenceById(dados.id());
         filme.atualizaDados(dados, genero);
