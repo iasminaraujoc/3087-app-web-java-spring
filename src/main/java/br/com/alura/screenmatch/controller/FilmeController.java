@@ -1,9 +1,7 @@
 package br.com.alura.screenmatch.controller;
 
-import br.com.alura.screenmatch.domain.filme.DadosAlteracaoFilme;
-import br.com.alura.screenmatch.domain.filme.DadosCadastroFilme;
-import br.com.alura.screenmatch.domain.filme.Filme;
-import br.com.alura.screenmatch.domain.filme.FilmeRepository;
+import br.com.alura.screenmatch.domain.filme.*;
+import br.com.alura.screenmatch.domain.genero.Genero;
 import br.com.alura.screenmatch.domain.genero.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +32,13 @@ public class FilmeController {
         return "filmes/formulario";
     }
 
+    @GetMapping("/pesquisa")
+    public String carregaPaginaPesquisa(Model model) {
+        model.addAttribute("generos", generoRepository.findAll());
+
+        return "filmes/pesquisa";
+    }
+
     @GetMapping
     public String carregaPaginaListagem(Model model) {
         model.addAttribute("lista", repository.findAll());
@@ -60,8 +65,23 @@ public class FilmeController {
 
     @PostMapping
     @Transactional
-    public String cadastraFilme(DadosCadastroFilme dados) {
-        var genero = generoRepository.getReferenceById(dados.idGenero());
+    public String cadastraFilme(DadosCadastroFilme dados, DadosPesquisaFilme dadosPesquisa) {
+
+        Genero genero;
+        if(dados.nome() != null){
+            System.out.println("primeiro if");
+            genero = generoRepository.getReferenceById(dados.idGenero());
+        } else {
+            genero = generoRepository.getReferenceById(dadosPesquisa.idGeneroPesquisa());
+            System.out.println(dadosPesquisa);
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            dados = dadosPesquisa.converte();
+        }
+
+
+
         var filme = new Filme(dados, genero);
 
         repository.save(filme);

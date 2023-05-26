@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}"
+>
+
+<head>
+    <title>Pesquisa de filme</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function pesquisaFilme() {
+            var movieTitle = $("#nomeBusca").val();
+
+            $.ajax({
+                url: "http://www.omdbapi.com/",
+                type: "GET",
+                data: {
+                    apikey: "6585022c",
+                    t: movieTitle
+                },
+                success: function(data) {
+                    $("#nome").val(data.Title);
+                    $("#duracao").val(data.Runtime);
+                    $("#ano").val(data.Year);
+}
+            });
+        }
+    </script>
+</head>
+<body>
+    <div layout:fragment="conteudo">
+        <h1>Pesquisa de filme</h1>
+        <form method="post" action="/filmes">
+
+            <div>
+                <label for="nomeBusca">Palavra-chave: </label>
+                <input id="nomeBusca" name="nomeBusca">
+                <br>
+                <button class="btn" id="busca" name="busca" type="button" onclick="pesquisaFilme()">Buscar</button>
+            </div>
+
+            <div>
+                <label for="nome">Nome:</label>
+                <input id="nome" name="nomePesquisa" >
+            </div>
+
+            <div>
+                <label for="duracao">Duração (em minutos):</label>
+                <input id="duracao" name="duracaoPesquisa">
+            </div>
+
+            <div>
+                <label for="ano">Ano de lançamento:</label>
+                <input id="ano" name="anoPesquisa">
+            </div>
+
+            <div>
+                <label for="genero">Gênero:</label>
+                <select id="genero" name="idGeneroPesquisa" class="form-control">
+                    <option value=""> Selecione o gênero</option>
+                    <option th:each="genero:${generos}" th:value="${genero.id}" th:text="${genero.nome}"></option>
+                </select>
+            </div>
+
+            <input type="submit" value="Cadastrar">
+        </form>
+    </div>
+</body>
+</html>

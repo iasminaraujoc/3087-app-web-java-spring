@@ -248,3 +248,17 @@ checkbox {
   height: 35px;
   padding: 15px;
 }
+
+.btn {
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  width: 165px;
+  height: 35px;
+  border-radius: 24px;
+  background-color: var(--azul-escuro);
+  padding: 15px;
+  border: none;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
