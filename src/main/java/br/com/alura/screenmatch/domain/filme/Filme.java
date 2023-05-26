@@ -18,9 +18,9 @@ public class Filme {
     private Genero genero;
 
     public Filme(DadosCadastroFilme dados, Genero genero) {
-        this.nome = dados.nome();
-        this.duracaoEmMinutos = dados.duracao();
-        this.anoLancamento = dados.ano();
+        this.nome = dados.getNome();
+        this.duracaoEmMinutos = dados.getDuracao();
+        this.anoLancamento = dados.getAno();
         this.genero = genero;
     }
 

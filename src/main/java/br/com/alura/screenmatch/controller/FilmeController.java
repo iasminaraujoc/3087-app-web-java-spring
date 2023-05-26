@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class FilmeController {
     @GetMapping("/formulario")
     public String carregaPaginaFormulario(Long id, Model model) {
         model.addAttribute("generos", generoRepository.findAll());
+        model.addAttribute("dados", new DadosCadastroFilme());
         if (id != null) {
             var filme = repository.getReferenceById(id);
             model.addAttribute("filme", filme);
@@ -68,18 +70,34 @@ public class FilmeController {
 
     @PostMapping
     @Transactional
-    public String cadastraFilme(@Valid DadosCadastroFilme dados, DadosPesquisaFilme dadosPesquisa) {
-        Genero genero;
-        if(dadosPesquisa != null){
-            genero = generoRepository.getReferenceById(dadosPesquisa.idGenero());
-            dados = dadosPesquisa.converteParaCadastro();
+    public String cadastraFilme(@Valid DadosCadastroFilme dados, DadosPesquisaFilme dadosPesquisa, BindingResult bindingResult, Model model) {
+        System.out.println("chegando no post agora");
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("dados", dados);
+            System.out.println("entrou aqui");
+            return "filmes/formulario";
+
         } else {
-            genero = generoRepository.getReferenceById(dados.idGenero());
+
+            System.out.println("to no else");
+            System.out.println("to no else");
+            System.out.println("to no else");
+
+            Genero genero;
+            if(dadosPesquisa != null){
+                genero = generoRepository.getReferenceById(dadosPesquisa.idGenero());
+                dados = dadosPesquisa.converteParaCadastro();
+            } else {
+                genero = generoRepository.getReferenceById(dados.getIdGenero());
+            }
+
+            var filme = new Filme(dados, genero);
+
+            repository.save(filme);
         }
 
-        var filme = new Filme(dados, genero);
 
-        repository.save(filme);
 
         return "redirect:/filmes";
     }
